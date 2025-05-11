@@ -194,24 +194,27 @@ class webhookController extends Controller
                     "body" => [
                         "text" => "Deseas realizar pago?"
                     ],
-                ],
-                "action" => [
-                    "buttons" => [
-                        [
-                            "type" => "reply",
-                            "reply" => [
-                                "id" => "btnSi",
-                                "title" => "Si"
-                            ]
-                        ],
-                        [
-                            "type" => "reply",
-                            "reply" => [
-                                "id" => "btnNo",
-                                "title" => "No"
+                    "footer" => [
+                        "text" => "Selecciona una de las opciones"
+                    ],
+                    "action" => [
+                        "buttons" => [
+                            [
+                                "type" => "reply",
+                                "reply" => [
+                                    "id" => "btnSi",
+                                    "title" => "Si"
+                                ]
+                            ],
+                            [
+                                "type" => "reply",
+                                "reply" => [
+                                    "id" => "btnNo",
+                                    "title" => "No"
+                                ]
                             ]
                         ]
-                    ]
+                    ],
                 ],
             ]);
         } else {
