@@ -66,9 +66,9 @@ class webhookController extends Controller
             $archivo = fopen($ruta, 'a');
             fwrite($archivo, $texto . PHP_EOL);
             fclose($archivo);
-            return response()->json(['message' =>'EVENT_RECEIVED' ], 200);
+            return response()->json(['message' => 'EVENT_RECEIVED'], 200);
         } catch (Exception $e) {
-            return response()->json(['message' =>'EVENT_RECEIVED' ]);
+            return response()->json(['message' => 'EVENT_RECEIVED']);
         }
     }
 
@@ -147,7 +147,7 @@ class webhookController extends Controller
                     "body" => "En breve me pondre en conctacto contigo"
                 ]
             ]);
-        } else if ($comentario=='7') {
+        } else if ($comentario == '7') {
             $data = json_encode([
                 "messaging_product" => "whatsapp",
                 "recipient_type" => "individual",
@@ -158,7 +158,7 @@ class webhookController extends Controller
                     "body" => "📅 Horario de Atención: Lunes a Viernes. \n🕜 Horario: 9:00 a.m. a 5:00 p.m. 🤓"
                 )
             ]);
-        }else if (strpos($comentario, "gracias") !== false) {
+        } else if (strpos($comentario, "gracias") !== false) {
             $data = json_encode([
                 "messaging_product" => "whatsapp",
                 "recipient_type" => "individual",
@@ -169,8 +169,10 @@ class webhookController extends Controller
                     "body" => "Gracias por contactarnos que tengas un exelente dia"
                 )
             ]);
-        }else if (strpos($comentario, "adios") !== false || strpos($comentario, "bye") !== false || strpos($comentario, "nos vemos") !== false
-        || strpos($comentario, "adíos") !== false) {
+        } else if (
+            strpos($comentario, "adios") !== false || strpos($comentario, "bye") !== false || strpos($comentario, "nos vemos") !== false
+            || strpos($comentario, "adíos") !== false
+        ) {
             $data = json_encode([
                 "messaging_product" => "whatsapp",
                 "recipient_type" => "individual",
@@ -181,7 +183,38 @@ class webhookController extends Controller
                     "body" => "Hasta luego"
                 )
             ]);
-        }else {
+        } else if (strpos($comentario, "boton") !== false) {
+            $data = json_encode([
+                "messaging_product" => "whatsapp",
+                "recipient_type" => "individual",
+                "to" => $numero,
+                "type" => "interactive",
+                "interactive" => [
+                    "type" => "button",
+                    "body" => [
+                        "text" => "Deseas realizar pago?"
+                    ],
+                ],
+                "action" => [
+                    "buttons" => [
+                        [
+                            "type" => "reply",
+                            "reply" => [
+                                "id" => "btnSi",
+                                "title" => "Si"
+                            ]
+                        ],
+                        [
+                            "type" => "reply",
+                            "reply" => [
+                                "id" => "btnNo",
+                                "title" => "No"
+                            ]
+                        ]
+                    ]
+                ],
+            ]);
+        } else {
             $data = json_encode([
                 "messaging_product" => "whatsapp",
                 "recipient_type" => "individual",
